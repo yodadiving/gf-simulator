@@ -13,7 +13,9 @@ var FILES = [
   'icons/icon-192.png',
   'icons/icon-512.png',
   'icons/icon-maskable-512.png',
-  'icons/apple-touch-icon.png'
+  'icons/apple-touch-icon.png',
+  'qrcode-600.png',
+  'icons/yodadiving.svg'
 ];
 
 self.addEventListener('install', function (e) {
