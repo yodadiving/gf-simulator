@@ -17,7 +17,7 @@ export function buildChips(onToggle) {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'chip'; b.id = 'chip' + c.i;
       b.style.setProperty('--cc', 'var(--c' + c.i + ')');
-      b.innerHTML = swatch(c) + '<span>' + shortName(c) + '</span>';
+      b.innerHTML = swatch(c) + '<span>' + shortName(c) + (c.star ? '*' : '') + '</span>';
       b.addEventListener('click', function () { onToggle(c.i); });
       box.appendChild(b);
     });

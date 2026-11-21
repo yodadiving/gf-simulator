@@ -17,6 +17,7 @@ const byName = (nom) => m.PROFILES.find((c) => c.n === 'ZHL16C ' + nom);
 /* réglage : [total des paliers (min), DTR (m:ss), durée de plongée (m:ss)] */
 const ATTENDU = {
   '100-100': [6, '9:12', '39:12'],
+  '95-95': [8, '11:12', '41:12'],
   '90-90': [11, '14:24', '44:24'],
   '85-85': [13, '16:24', '46:24'],
   '80-80': [16, '19:24', '49:24'],
@@ -29,7 +30,7 @@ const ATTENDU = {
   '30-70': [30, '33:48', '63:48']
 };
 
-test('les 11 réglages attendus sont présents, dans cet ordre', () => {
+test('les 12 réglages attendus sont présents, dans cet ordre', () => {
   assert.deepEqual(m.PROFILES.map((c) => c.n.replace('ZHL16C ', '')), Object.keys(ATTENDU));
 });
 
@@ -108,9 +109,10 @@ test('données invalides refusées avec un message clair', () => {
     ['plongee manquant', (d) => { delete d.plongee; }, /plongee/],
     ['vitesse nulle', (d) => { d.plongee.vitesseDescente = 0; }, /vitesseDescente/],
     ['pas de réglages', (d) => { d.reglages = []; }, /reglages/],
-    ['nombre de paliers incorrect', (d) => { d.reglages[2].paliers = [1, 2]; }, /ZHL16C 85-85.*4 durées/],
+    ['nombre de paliers incorrect', (d) => { d.reglages[2].paliers = [1, 2]; }, /ZHL16C 90-90.*4 durées/],
     ['durée négative', (d) => { d.reglages[0].paliers[3] = -1; }, /ZHL16C 100-100/],
     ['durée non numérique', (d) => { d.reglages[0].paliers[3] = '6'; }, /ZHL16C 100-100/],
+    ['indicateur usine non booléen', (d) => { d.reglages[8].prereglageUsine = 'oui'; }, /prereglageUsine/],
     ['groupe inconnu', (d) => { d.reglages[1].groupe = 'autre'; }, /groupe/],
     ['nom manquant', (d) => { delete d.reglages[3].nom; }, /nom/]
   ];
@@ -120,4 +122,14 @@ test('données invalides refusées avec un message clair', () => {
     assert.throws(() => m.initModel(d), motif, libelle);
   }
   m.initModel(DATA); /* remet le modèle en état pour les tests suivants */
+});
+
+test('astérisque : seuls 45-95, 40-85 et 35-75 sont des préréglages usine (pas 30-70, ni les symétriques)', () => {
+  const avecEtoile = m.PROFILES.filter((c) => c.star).map((c) => c.n.replace('ZHL16C ', ''));
+  assert.deepEqual(avecEtoile, ['45-95', '40-85', '35-75']);
+  assert.equal(byName('30-70').star, false);
+});
+
+test('les 8 symétriques sont avant les 4 asymétriques (couleurs : 8 bleus puis 4 oranges)', () => {
+  assert.deepEqual(m.PROFILES.map((c) => c.g), [...Array(8).fill('perso'), ...Array(4).fill('usine')]);
 });

@@ -20,13 +20,22 @@ async function start() {
   if (!res.ok) throw new Error('data/profils.json : erreur HTTP ' + res.status);
   initModel(await res.json());
 
-  /* réglages affichés : [100-100, 45-95] par défaut, sinon la dernière sélection mémorisée */
-  let sel = [0, 7];
+  /* Réglages affichés : 100-100 et 45-95 par défaut, sinon la dernière sélection mémorisée.
+     La sélection est mémorisée par NOM (et non par position), pour que l'ajout ou
+     l'insertion d'un réglage dans data/profils.json ne décale pas la sélection de chacun. */
+  const DEFAUT = ['ZHL16C 100-100', 'ZHL16C 45-95'];
+  const idx = function (nom) { return PROFILES.findIndex(function (c) { return c.n === nom; }); };
+  const enIndices = function (noms) { return noms.map(idx).filter(function (i) { return i >= 0; }).sort(function (a, b) { return a - b; }); };
+  let sel = enIndices(DEFAUT);
   try {
-    const sv = JSON.parse(localStorage.getItem('gf-sel'));
-    if (Array.isArray(sv) && sv.every(function (i) { return PROFILES[i]; })) sel = sv;
+    const sv = JSON.parse(localStorage.getItem('gf-sel-noms'));
+    if (Array.isArray(sv)) {
+      const l = enIndices(sv);
+      if (l.length || !sv.length) sel = l; /* sélection vide mémorisée : on la respecte ; noms tous inconnus : valeurs par défaut */
+    }
+    localStorage.removeItem('gf-sel'); /* ancien format (positions) */
   } catch (e) { }
-  function save() { try { localStorage.setItem('gf-sel', JSON.stringify(sel)); } catch (e) { } }
+  function save() { try { localStorage.setItem('gf-sel-noms', JSON.stringify(sel.map(function (i) { return PROFILES[i].n; }))); } catch (e) { } }
 
   const charts = initCharts(function () { return sel; });
 

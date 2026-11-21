@@ -3,8 +3,9 @@
 :root{
   --bg:#EEF2F5; --card:#FFFFFF; --ink:#14212B; --muted:#566673; --grid:#DCE3E8; --line:#C3CED6;
   --accent:#0E7C86; --water:#E6F1F6;
-  --c0:#7DB1E6; --c1:#5A9BD8; --c2:#3F85CC; --c3:#2B6EB6; --c4:#1F5A9C; --c5:#174885; --c6:#0F3569;
-  --c7:#E8A53C; --c8:#DA8128; --c9:#BD5C17; --c10:#8F3E0B;
+  /* réglages symétriques : 8 bleus, du plus clair (100-100) au plus foncé ; asymétriques : 4 oranges */
+  --c0:#7DB1E6; --c1:#6D9FD4; --c2:#5E8EC2; --c3:#4E7CB0; --c4:#3E6A9F; --c5:#2E588D; --c6:#1F477B; --c7:#0F3569;
+  --c8:#E8A53C; --c9:#DA8128; --c10:#BD5C17; --c11:#8F3E0B;
   --h0:#0B4F57; --h1:#1B7F8A; --h2:#4FB0B8; --h3:#9DD8DB; --hl0:#FFFFFF; --hl1:#FFFFFF; --hl2:#04262D; --hl3:#04262D;
   color-scheme:light;
   --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -12,20 +13,19 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0D1922; --card:#13232E; --ink:#E7EFF4; --muted:#93A6B3; --grid:#233845; --line:#3A5163;
   --accent:#4FC3CF; --water:#10222D;
-  --c0:#5C86B3; --c1:#6D9BCB; --c2:#82B0DE; --c3:#98C2EC; --c4:#AFD2F5; --c5:#C6E0FB; --c6:#DDEEFF;
-  --c7:#A4702C; --c8:#CC8934; --c9:#EBA64D; --c10:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}}
+  --c0:#5C86B3; --c1:#6E95BE; --c2:#81A4C9; --c3:#93B3D4; --c4:#A6C1DE; --c5:#B8D0E9; --c6:#CBDFF4; --c7:#DDEEFF;
+  --c8:#A4702C; --c9:#CC8934; --c10:#EBA64D; --c11:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0D1922; --card:#13232E; --ink:#E7EFF4; --muted:#93A6B3; --grid:#233845; --line:#3A5163;
   --accent:#4FC3CF; --water:#10222D;
-  --c0:#5C86B3; --c1:#6D9BCB; --c2:#82B0DE; --c3:#98C2EC; --c4:#AFD2F5; --c5:#C6E0FB; --c6:#DDEEFF;
-  --c7:#A4702C; --c8:#CC8934; --c9:#EBA64D; --c10:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}
+  --c0:#5C86B3; --c1:#6E95BE; --c2:#81A4C9; --c3:#93B3D4; --c4:#A6C1DE; --c5:#B8D0E9; --c6:#CBDFF4; --c7:#DDEEFF;
+  --c8:#A4702C; --c9:#CC8934; --c10:#EBA64D; --c11:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;
   padding-block:20px 32px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 header{display:flex;flex-direction:column;gap:6px}
-.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 h1{margin:0;font-size:clamp(22px,5.2vw,32px);line-height:1.15;letter-spacing:-.01em;text-wrap:balance}
 .lead{margin:0;color:var(--muted)}
 
@@ -112,7 +112,7 @@ tbody tr:last-child td{border-bottom:0}
 .about a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
 .about-links{font-size:12.5px}
 @media (max-width:480px){.about{gap:12px;padding:12px;align-items:flex-start}.about img{width:56px;height:56px}}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.top{display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card);gap:2px}
 .seg button{font:inherit;font-size:13px;color:var(--muted);background:none;border:0;border-radius:999px;padding:6px 12px;min-height:34px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .seg button svg{width:15px;height:15px;flex:none}
@@ -149,15 +149,15 @@ tbody tr:last-child td{border-bottom:0}
 .info:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .info{position:relative}
 .info::after{content:"";position:absolute;inset:-7px} /* zone de toucher de 36 px */
-.hint.top{margin:0 0 8px;font-size:12.5px;line-height:1.4;color:var(--muted)}
-.chartcard .hint.top{margin:0 6px 8px}
+.hint.aide{margin:0 0 8px;font-size:12.5px;line-height:1.4;color:var(--muted)}
+.chartcard .hint.aide{margin:0 6px 8px}
 .fixed dd small.detail::before{content:attr(data-sep)}
 
 /* ===== Petits écrans : on gagne de la hauteur ===== */
 @media (max-width:640px){
   .info{display:inline-grid}
-  .hint.top{display:none;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--accent) 9%,var(--card));color:var(--ink)}
-  .hint.top.open{display:block}
+  .hint.aide{display:none;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--accent) 9%,var(--card));color:var(--ink)}
+  .hint.aide.open{display:block}
 }
 @media (max-width:520px){
   /* caractéristiques de la plongée : un seul bloc compact, sur 2 lignes */
@@ -177,3 +177,7 @@ tbody tr:last-child td{border-bottom:0}
   .chip svg{width:12px}
   .group h3{font-size:11px;letter-spacing:.03em}
 }
+
+/* ===== Astérisque des préréglages usine et sa note ===== */
+.foot-note{margin:2px 0 0;font-size:12px;line-height:1.4;color:var(--muted)}
+@media (max-width:520px){.top{justify-content:flex-start}}

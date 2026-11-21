@@ -32,6 +32,7 @@ function checkData(data) {
     const nom = r && r.nom ? r.nom : '#' + (i + 1);
     if (!r || !r.nom) fail('le réglage #' + (i + 1) + ' n\'a pas de « nom »');
     if (r.groupe !== 'perso' && r.groupe !== 'usine') fail(nom + ' : « groupe » doit valoir "perso" ou "usine"');
+    if (r.prereglageUsine !== undefined && typeof r.prereglageUsine !== 'boolean') fail(nom + ' : « prereglageUsine » doit valoir true ou false');
     if (!Array.isArray(r.paliers) || r.paliers.length !== data.profondeursPaliers.length ||
         !r.paliers.every(function (v) { return typeof v === 'number' && v >= 0; })) {
       fail(nom + ' : « paliers » doit contenir ' + data.profondeursPaliers.length + ' durées (nombres >= 0)');
@@ -40,7 +41,7 @@ function checkData(data) {
 }
 
 /* Calcule le profil d'un réglage : points du tracé, total des paliers, DTR, durée totale.
-   setting : { n: nom, g: groupe, s: durées des paliers } */
+   setting : { n: nom, g: groupe, s: durées des paliers, star: préréglage usine (facultatif) } */
 export function computeProfile(setting, i, fix = FIX, stops = STOPS) {
   const c = { ...setting, i, dash: setting.g === 'usine' ? '7 4' : '' };
   let t = fix.depth / fix.desc;
@@ -82,7 +83,7 @@ export function initModel(data) {
   };
   STOPS = data.profondeursPaliers.slice();
   PROFILES = data.reglages.map(function (r, i) {
-    return computeProfile({ n: r.nom, g: r.groupe, s: r.paliers }, i, FIX, STOPS);
+    return computeProfile({ n: r.nom, g: r.groupe, s: r.paliers, star: r.prereglageUsine === true }, i, FIX, STOPS);
   });
   XMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.total; })) / 10) * 10;
   YMAX = 32;

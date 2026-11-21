@@ -22,7 +22,6 @@
 <div class="wrap">
   <header>
     <div class="top">
-      <div class="eyebrow">Ordinateur de plongée utilisé : Shearwater Pérégrine</div>
       <div class="top-r">
       <button type="button" class="install" id="install" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Installer<span class="more"> l’application</span></button>
       <button type="button" class="pill" id="share-open" aria-haspopup="dialog" aria-label="Partager l’application" hidden><svg class="ic-apple" hidden viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg><svg class="ic-android" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="18" cy="5" r="3" stroke="none"/><circle cx="6" cy="12" r="3" stroke="none"/><circle cx="18" cy="19" r="3" stroke="none"/><path d="M8.5 10.7l7-4.2M8.5 13.3l7 4.2" fill="none"/></svg><span class="lbl">Partager</span></button>
@@ -54,32 +53,33 @@
         <button class="tool" id="none" type="button">Effacer</button>
       </div>
     </div>
-    <div class="group"><h3>Réglages personnalisés : gradient factors symétriques</h3><div class="chips" id="g-perso"></div></div>
-    <div class="group"><h3>Préréglages usine : gradient factors asymétriques</h3><div class="chips" id="g-usine"></div></div>
+    <div class="group"><h3>Gradient factors symétriques</h3><div class="chips" id="g-perso"></div></div>
+    <div class="group"><h3>Gradient factors asymétriques</h3><div class="chips" id="g-usine"></div>
+      <p class="foot-note">* Ces GF sont les préréglages usine disponibles sur certains ordinateurs de plongée, comme le Shearwater Peregrine.</p></div>
   </section>
 
   <section class="panel chartcard" aria-labelledby="chart-t">
     <h2 id="chart-t">Profil de plongée<button type="button" class="info" aria-label="Aide : lire le graphique" aria-expanded="false" aria-controls="info-chart">i</button></h2>
-    <p class="hint top" id="info-chart">Touchez ou survolez le graphique pour lire la profondeur de chaque courbe à un instant donné. Les traits pointillés sont les préréglages usine.</p>
+    <p class="hint aide" id="info-chart">Touchez ou survolez le graphique pour lire la profondeur de chaque courbe à un instant donné. Les traits pointillés sont les préréglages usine.</p>
     <div class="chartwrap" id="chart">
       <div id="plot"></div>
       <svg id="cursor" aria-hidden="true"></svg>
       <div class="tip" id="tip" hidden></div>
-    </div>
+    </div>
   </section>
 
   <section class="panel chartcard" aria-labelledby="hist-t">
     <h2 id="hist-t">Temps de paliers par profondeur<button type="button" class="info" aria-label="Aide : lire l'histogramme" aria-expanded="false" aria-controls="info-hist">i</button></h2>
-    <p class="hint top" id="info-hist">Durée des paliers en minutes, empilée par profondeur. Le trait de couleur sous chaque colonne rappelle la couleur de la courbe.</p>
+    <p class="hint aide" id="info-hist">Durée des paliers en minutes, empilée par profondeur. Le trait de couleur sous chaque colonne rappelle la couleur de la courbe.</p>
     <div class="hleg" aria-label="Légende des profondeurs de palier">
       <span><i style="background:var(--h0)"></i>12 m</span><span><i style="background:var(--h1)"></i>9 m</span><span><i style="background:var(--h2)"></i>6 m</span><span><i style="background:var(--h3)"></i>3 m</span>
     </div>
-    <div class="chartwrap" id="hist"><div id="hplot"></div><div class="tip" id="htip" hidden></div></div>
+    <div class="chartwrap" id="hist"><div id="hplot"></div><div class="tip" id="htip" hidden></div></div>
   </section>
 
   <section class="panel" aria-labelledby="tab-t">
     <h2 id="tab-t">Durée des paliers<button type="button" class="info" aria-label="Aide : lire le tableau" aria-expanded="false" aria-controls="info-tab">i</button></h2>
-    <p class="hint top" id="info-tab">Durées en minutes. « Paliers » : total des paliers. « DTR » : durée totale de remontée (fond → 1er palier à 10 m/min, paliers, puis trajets entre paliers et vers la surface à 6 m/min). « Plongée » : durée totale, surface à surface.</p>
+    <p class="hint aide" id="info-tab">Durées en minutes. « Paliers » : total des paliers. « DTR » : durée totale de remontée (fond → 1er palier à 10 m/min, paliers, puis trajets entre paliers et vers la surface à 6 m/min). « Plongée » : durée totale, surface à surface.</p>
     <div class="tablebox">
       <table aria-labelledby="tab-t">
         <thead><tr><th scope="col">ZHL16C</th><th scope="col">12 m</th><th scope="col">9 m</th><th scope="col">6 m</th><th scope="col">3 m</th><th scope="col">Paliers</th><th scope="col">DTR</th><th scope="col">Plongée</th></tr></thead>
