@@ -11,6 +11,7 @@ var FILES = [
   'index.html',
   'manifest.webmanifest',
   'css/style.css',
+  'data/profils.json',
   'js/theme-init.js',
   'js/main.js',
   'js/model.js',

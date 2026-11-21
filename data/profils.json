@@ -1,0 +1,24 @@
+{
+  "description": "Données de GF Simulator : hypothèses de la plongée et durées de paliers de chaque réglage de gradient factors (ZHL-16C). Durées en minutes, saisies d'après le tableau source (classeur Comparatif GF).",
+  "plongee": {
+    "profondeur": 30,
+    "tempsAuFond": 30,
+    "vitesseDescente": 20,
+    "vitesseRemonteeJusquAuPremierPalier": 10,
+    "vitesseRemonteeEntrePaliersEtVersSurface": 6
+  },
+  "profondeursPaliers": [12, 9, 6, 3],
+  "reglages": [
+    { "nom": "ZHL16C 100-100", "groupe": "perso", "paliers": [0, 0, 0, 6] },
+    { "nom": "ZHL16C 90-90", "groupe": "perso", "paliers": [0, 0, 1, 10] },
+    { "nom": "ZHL16C 85-85", "groupe": "perso", "paliers": [0, 0, 2, 11] },
+    { "nom": "ZHL16C 80-80", "groupe": "perso", "paliers": [0, 0, 3, 13] },
+    { "nom": "ZHL16C 75-75", "groupe": "perso", "paliers": [0, 0, 4, 15] },
+    { "nom": "ZHL16C 70-70", "groupe": "perso", "paliers": [0, 0, 6, 18] },
+    { "nom": "ZHL16C 60-60", "groupe": "perso", "paliers": [0, 2, 8, 24] },
+    { "nom": "ZHL16C 45-95", "groupe": "usine", "paliers": [0, 0, 2, 6] },
+    { "nom": "ZHL16C 40-85", "groupe": "usine", "paliers": [0, 2, 4, 9] },
+    { "nom": "ZHL16C 35-75", "groupe": "usine", "paliers": [1, 3, 6, 14] },
+    { "nom": "ZHL16C 30-70", "groupe": "usine", "paliers": [2, 4, 7, 17] }
+  ]
+}

@@ -1,31 +1,46 @@
 /* Modèle : hypothèses de la plongée, réglages et calculs.
-   Ce fichier n'accède jamais à la page (pas de document, pas de window) :
-   il peut donc être testé seul avec Node. */
+   Ce fichier n'accède jamais à la page (pas de document, pas de window, pas de fetch) :
+   il peut donc être testé seul avec Node. Les données viennent de data/profils.json,
+   chargé par main.js puis transmis à initModel(). */
 
-/* Hypothèses figées de la plongée (m, min, m/min).
+/* Remplis par initModel(). Les autres modules les importent : grâce aux « live bindings »
+   des modules ES, ils voient les valeurs dès que initModel() a été appelé. */
+
+/* Hypothèses de la plongée (m, min, m/min).
    asc : fond -> 1er palier ; asc2 : entre les paliers et vers la surface. */
-export const FIX = { depth: 30, bottom: 30, desc: 20, asc: 10, asc2: 6 };
+export let FIX;
 
 /* Profondeurs de palier possibles, du plus profond au plus proche de la surface. */
-export const STOPS = [12, 9, 6, 3];
+export let STOPS;
 
-/* Les 11 réglages. n : nom, g : groupe (perso = symétrique, usine = asymétrique),
-   s : durée du palier en minutes à 12, 9, 6 et 3 m (saisie d'après le tableau source). */
-const SETTINGS = [
-  { n: 'ZHL16C 100-100', g: 'perso', s: [0, 0, 0, 6] },
-  { n: 'ZHL16C 90-90', g: 'perso', s: [0, 0, 1, 10] },
-  { n: 'ZHL16C 85-85', g: 'perso', s: [0, 0, 2, 11] },
-  { n: 'ZHL16C 80-80', g: 'perso', s: [0, 0, 3, 13] },
-  { n: 'ZHL16C 75-75', g: 'perso', s: [0, 0, 4, 15] },
-  { n: 'ZHL16C 70-70', g: 'perso', s: [0, 0, 6, 18] },
-  { n: 'ZHL16C 60-60', g: 'perso', s: [0, 2, 8, 24] },
-  { n: 'ZHL16C 45-95', g: 'usine', s: [0, 0, 2, 6] },
-  { n: 'ZHL16C 40-85', g: 'usine', s: [0, 2, 4, 9] },
-  { n: 'ZHL16C 35-75', g: 'usine', s: [1, 3, 6, 14] },
-  { n: 'ZHL16C 30-70', g: 'usine', s: [2, 4, 7, 17] }
-];
+/* Un profil par réglage (voir computeProfile). */
+export let PROFILES;
 
-/* Calcule le profil d'un réglage : points du tracé, total des paliers, DTR, durée totale. */
+/* Bornes des axes, calculées pour rester stables quelle que soit la sélection. */
+export let XMAX, YMAX, HMAX;
+
+function checkData(data) {
+  const fail = function (msg) { throw new Error('data/profils.json : ' + msg); };
+  const p = data && data.plongee;
+  if (!p) fail('« plongee » manquant');
+  ['profondeur', 'tempsAuFond', 'vitesseDescente', 'vitesseRemonteeJusquAuPremierPalier', 'vitesseRemonteeEntrePaliersEtVersSurface'].forEach(function (k) {
+    if (!(p[k] > 0)) fail('« plongee.' + k + ' » doit être un nombre positif');
+  });
+  if (!Array.isArray(data.profondeursPaliers) || !data.profondeursPaliers.length) fail('« profondeursPaliers » manquant');
+  if (!Array.isArray(data.reglages) || !data.reglages.length) fail('« reglages » manquant');
+  data.reglages.forEach(function (r, i) {
+    const nom = r && r.nom ? r.nom : '#' + (i + 1);
+    if (!r || !r.nom) fail('le réglage #' + (i + 1) + ' n\'a pas de « nom »');
+    if (r.groupe !== 'perso' && r.groupe !== 'usine') fail(nom + ' : « groupe » doit valoir "perso" ou "usine"');
+    if (!Array.isArray(r.paliers) || r.paliers.length !== data.profondeursPaliers.length ||
+        !r.paliers.every(function (v) { return typeof v === 'number' && v >= 0; })) {
+      fail(nom + ' : « paliers » doit contenir ' + data.profondeursPaliers.length + ' durées (nombres >= 0)');
+    }
+  });
+}
+
+/* Calcule le profil d'un réglage : points du tracé, total des paliers, DTR, durée totale.
+   setting : { n: nom, g: groupe, s: durées des paliers } */
 export function computeProfile(setting, i, fix = FIX, stops = STOPS) {
   const c = { ...setting, i, dash: setting.g === 'usine' ? '7 4' : '' };
   let t = fix.depth / fix.desc;
@@ -54,12 +69,25 @@ export function computeProfile(setting, i, fix = FIX, stops = STOPS) {
   return c;
 }
 
-export const PROFILES = SETTINGS.map(function (s, i) { return computeProfile(s, i); });
-
-/* Bornes des axes, calculées pour rester stables quelle que soit la sélection. */
-export const XMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.total; })) / 10) * 10;
-export const YMAX = 32;
-export const HMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.stopSum; })) / 10) * 10;
+/* À appeler une fois, avec le contenu de data/profils.json. */
+export function initModel(data) {
+  checkData(data);
+  const p = data.plongee;
+  FIX = {
+    depth: p.profondeur,
+    bottom: p.tempsAuFond,
+    desc: p.vitesseDescente,
+    asc: p.vitesseRemonteeJusquAuPremierPalier,
+    asc2: p.vitesseRemonteeEntrePaliersEtVersSurface
+  };
+  STOPS = data.profondeursPaliers.slice();
+  PROFILES = data.reglages.map(function (r, i) {
+    return computeProfile({ n: r.nom, g: r.groupe, s: r.paliers }, i, FIX, STOPS);
+  });
+  XMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.total; })) / 10) * 10;
+  YMAX = 32;
+  HMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.stopSum; })) / 10) * 10;
+}
 
 /* Profondeur d'un profil à l'instant t (pour l'info-bulle). */
 export function depthAt(c, t) {
