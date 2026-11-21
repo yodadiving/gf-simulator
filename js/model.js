@@ -31,7 +31,7 @@ function checkData(data) {
   data.reglages.forEach(function (r, i) {
     const nom = r && r.nom ? r.nom : '#' + (i + 1);
     if (!r || !r.nom) fail('le réglage #' + (i + 1) + ' n\'a pas de « nom »');
-    if (r.groupe !== 'perso' && r.groupe !== 'usine') fail(nom + ' : « groupe » doit valoir "perso" ou "usine"');
+    if (r.groupe !== 'symetrique' && r.groupe !== 'asymetrique') fail(nom + ' : « groupe » doit valoir "symetrique" ou "asymetrique"');
     if (r.prereglageUsine !== undefined && typeof r.prereglageUsine !== 'boolean') fail(nom + ' : « prereglageUsine » doit valoir true ou false');
     if (!Array.isArray(r.paliers) || r.paliers.length !== data.profondeursPaliers.length ||
         !r.paliers.every(function (v) { return typeof v === 'number' && v >= 0; })) {
@@ -43,7 +43,7 @@ function checkData(data) {
 /* Calcule le profil d'un réglage : points du tracé, total des paliers, DTR, durée totale.
    setting : { n: nom, g: groupe, s: durées des paliers, star: préréglage usine (facultatif) } */
 export function computeProfile(setting, i, fix = FIX, stops = STOPS) {
-  const c = { ...setting, i, dash: setting.g === 'usine' ? '7 4' : '' };
+  const c = { ...setting, i, dash: setting.g === 'asymetrique' ? '7 4' : '' };
   let t = fix.depth / fix.desc;
   let d = fix.depth;
   const p = [[0, 0], [t, d]];

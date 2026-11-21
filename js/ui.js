@@ -3,7 +3,7 @@ import { PROFILES, fmtMS, shortName } from './model.js';
 
 export const $ = function (id) { return document.getElementById(id); };
 
-/* Petit trait de la couleur du réglage (plein pour les perso, pointillé pour les préréglages usine). */
+/* Petit trait de la couleur du réglage (plein pour les symétriques, pointillé pour les asymétriques). */
 function swatch(c) {
   return '<svg viewBox="0 0 22 8" aria-hidden="true"><line x1="1" y1="4" x2="21" y2="4" stroke-width="3" stroke-linecap="round" style="stroke:var(--c' + c.i + ')"' + (c.dash ? ' stroke-dasharray="5 3"' : '') + '/></svg>';
 }
@@ -11,7 +11,7 @@ function swatch(c) {
 /* ---------- puces ---------- */
 /* onToggle(i) est appelé quand on clique sur la puce du réglage i. */
 export function buildChips(onToggle) {
-  ['perso', 'usine'].forEach(function (g) {
+  ['symetrique', 'asymetrique'].forEach(function (g) {
     const box = $('g-' + g); box.innerHTML = '';
     PROFILES.filter(function (c) { return c.g === g; }).forEach(function (c) {
       const b = document.createElement('button');

@@ -72,7 +72,7 @@ test('45-95 : 10 m/min jusqu\'au palier de 6 m, puis 6 m/min jusqu\'à la surfac
 });
 
 test('sans aucun palier : toute la remontée à 10 m/min', () => {
-  const c = m.computeProfile({ n: 'sans palier', g: 'perso', s: [0, 0, 0, 0] }, 0, m.FIX, m.STOPS);
+  const c = m.computeProfile({ n: 'sans palier', g: 'symetrique', s: [0, 0, 0, 0] }, 0, m.FIX, m.STOPS);
   assert.equal(c.stopSum, 0);
   near(c.dtr, 3, 'DTR');
   near(c.total, 33, 'durée de plongée');
@@ -131,5 +131,5 @@ test('astérisque : seuls 45-95, 40-85 et 35-75 sont des préréglages usine (pa
 });
 
 test('les 8 symétriques sont avant les 4 asymétriques (couleurs : 8 bleus puis 4 oranges)', () => {
-  assert.deepEqual(m.PROFILES.map((c) => c.g), [...Array(8).fill('perso'), ...Array(4).fill('usine')]);
+  assert.deepEqual(m.PROFILES.map((c) => c.g), [...Array(8).fill('symetrique'), ...Array(4).fill('asymetrique')]);
 });
