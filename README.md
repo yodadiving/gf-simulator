@@ -6,7 +6,7 @@ Une application simple pour visualiser l'effet des gradient factors ZHL-16C, sym
 
 Elle s'installe comme une application (ordinateur, tablette, téléphone) et fonctionne hors ligne. À chaque lancement, elle vérifie s'il existe une nouvelle version et la télécharge avant de s'ouvrir.
 
-> **Outil pédagogique.** Les profils sont schématiques (une plongée de 30 m pendant 30 min, remontée à 10 m/min jusqu'au premier palier, puis 6 m/min). Les durées de paliers sont saisies d'après un tableau source : elles n'ont pas été recalculées avec un algorithme ZHL-16C ni comparées à un vrai ordinateur de plongée. Cet outil ne remplace ni un ordinateur de plongée ni une planification de plongée.
+> **Outil pédagogique.** Les profils sont schématiques (une plongée de 30 m pendant 30 min, remontée à 10 m/min jusqu'au premier palier, puis 6 m/min) et ne remplacent ni un ordinateur de plongée ni une planification de plongée.
 
 ## Lancer en local
 
