@@ -23,6 +23,7 @@ var FILES = [
   'icons/icon-maskable-512.png',
   'icons/apple-touch-icon.png',
   'qrcode-600.png',
+  'qrcode.png',
   'icons/yodadiving.svg'
 ];
 
