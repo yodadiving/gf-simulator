@@ -141,3 +141,39 @@ tbody tr:last-child td{border-bottom:0}
 .install:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .hint-install{margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:13.5px;color:var(--ink);max-width:62ch}
 @media (prefers-reduced-motion:reduce){.chip{transition:none}}
+
+/* ===== Textes d'aide des blocs : visibles sur grand écran, repliés derrière un « i » sur petit écran ===== */
+.panel h2{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.info{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);background:none;font:italic 700 13px/1 Georgia,"Times New Roman",serif;cursor:pointer;display:none;place-items:center;padding:0}
+.info[aria-expanded="true"]{background:var(--accent);color:var(--card)}
+.info:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.info{position:relative}
+.info::after{content:"";position:absolute;inset:-7px} /* zone de toucher de 36 px */
+.hint.top{margin:0 0 8px;font-size:12.5px;line-height:1.4;color:var(--muted)}
+.chartcard .hint.top{margin:0 6px 8px}
+.fixed dd small.detail::before{content:attr(data-sep)}
+
+/* ===== Petits écrans : on gagne de la hauteur ===== */
+@media (max-width:640px){
+  .info{display:inline-grid}
+  .hint.top{display:none;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--accent) 9%,var(--card));color:var(--ink)}
+  .hint.top.open{display:block}
+}
+@media (max-width:520px){
+  /* caractéristiques de la plongée : un seul bloc compact, sur 2 lignes */
+  .fixed{grid-template-columns:repeat(6,1fr);gap:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 4px}
+  .fixed div{grid-column:span 2;background:none;border:0;border-radius:0;padding:4px 8px}
+  .fixed div:nth-child(4){grid-column:span 4}
+  .fixed div:last-child{grid-column:span 2}
+  .fixed dt{font-size:10px;letter-spacing:.03em}
+  .fixed dd{font-size:15px;margin-top:1px}
+  .fixed dd small{font-size:11px}
+  .fixed dd small.detail{display:block;line-height:1.25}
+  .fixed dd small.detail::before{content:none}
+  /* puces de réglage : 4 par ligne (3 sur les très petits écrans) */
+  .pick{gap:10px;padding:12px}
+  .chips{grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px}
+  .chip{font-size:12.5px;padding:3px 6px;min-height:34px;gap:4px}
+  .chip svg{width:12px}
+  .group h3{font-size:11px;letter-spacing:.03em}
+}

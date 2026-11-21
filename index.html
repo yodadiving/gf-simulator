@@ -40,9 +40,9 @@
 
   <dl class="fixed" aria-label="Paramètres de la plongée, non modifiables">
     <div><dt>Profondeur</dt><dd>30 <small>m</small></dd></div>
-    <div><dt>Temps au fond</dt><dd>30 <small>min, descente incluse</small></dd></div>
+    <div><dt>Temps au fond</dt><dd>30 <small>min</small><small class="detail" data-sep=", ">descente incluse</small></dd></div>
     <div><dt>Descente</dt><dd>20 <small>m/min</small></dd></div>
-    <div><dt>Remontée</dt><dd>10 <small>m/min jusqu'au 1er palier, puis 6 m/min</small></dd></div>
+    <div><dt>Remontée</dt><dd>10 <small>m/min</small><small class="detail" data-sep=" ">jusqu’au 1er palier, puis 6 m/min</small></dd></div>
     <div><dt>Paliers</dt><dd>12 · 9 · 6 · 3 <small>m</small></dd></div>
   </dl>
 
@@ -59,29 +59,29 @@
   </section>
 
   <section class="panel chartcard" aria-labelledby="chart-t">
-    <h2 id="chart-t">Profil de plongée : profondeur selon le temps</h2>
+    <h2 id="chart-t">Profil de plongée<button type="button" class="info" aria-label="Aide : lire le graphique" aria-expanded="false" aria-controls="info-chart">i</button></h2>
+    <p class="hint top" id="info-chart">Touchez ou survolez le graphique pour lire la profondeur de chaque courbe à un instant donné. Les traits pointillés sont les préréglages usine.</p>
     <div class="chartwrap" id="chart">
       <div id="plot"></div>
       <svg id="cursor" aria-hidden="true"></svg>
       <div class="tip" id="tip" hidden></div>
-    </div>
-    <p class="hint">Touchez ou survolez le graphique pour lire la profondeur de chaque courbe à un instant donné. Les traits pointillés sont les préréglages usine.</p>
+    </div>
   </section>
 
   <section class="panel chartcard" aria-labelledby="hist-t">
-    <h2 id="hist-t">Temps de paliers par profondeur</h2>
+    <h2 id="hist-t">Temps de paliers par profondeur<button type="button" class="info" aria-label="Aide : lire l'histogramme" aria-expanded="false" aria-controls="info-hist">i</button></h2>
+    <p class="hint top" id="info-hist">Durée des paliers en minutes, empilée par profondeur. Le trait de couleur sous chaque colonne rappelle la couleur de la courbe.</p>
     <div class="hleg" aria-label="Légende des profondeurs de palier">
       <span><i style="background:var(--h0)"></i>12 m</span><span><i style="background:var(--h1)"></i>9 m</span><span><i style="background:var(--h2)"></i>6 m</span><span><i style="background:var(--h3)"></i>3 m</span>
     </div>
-    <div class="chartwrap" id="hist"><div id="hplot"></div><div class="tip" id="htip" hidden></div></div>
-    <p class="hint">Durée des paliers en minutes, empilée par profondeur. Le trait de couleur sous chaque colonne rappelle la couleur de la courbe.</p>
+    <div class="chartwrap" id="hist"><div id="hplot"></div><div class="tip" id="htip" hidden></div></div>
   </section>
 
   <section class="panel" aria-labelledby="tab-t">
-    <h2 id="tab-t" style="margin-bottom:8px">Durée des paliers</h2>
+    <h2 id="tab-t">Durée des paliers<button type="button" class="info" aria-label="Aide : lire le tableau" aria-expanded="false" aria-controls="info-tab">i</button></h2>
+    <p class="hint top" id="info-tab">Durées en minutes. « Paliers » : total des paliers. « DTR » : durée totale de remontée (fond → 1er palier à 10 m/min, paliers, puis trajets entre paliers et vers la surface à 6 m/min). « Plongée » : durée totale, surface à surface.</p>
     <div class="tablebox">
-      <table>
-        <caption>Durées en minutes. « Paliers » : total des paliers. « DTR » : durée totale de remontée (fond → 1er palier à 10 m/min, paliers, puis trajets entre paliers et vers la surface à 6 m/min). « Plongée » : durée totale, surface à surface.</caption>
+      <table aria-labelledby="tab-t">
         <thead><tr><th scope="col">ZHL16C</th><th scope="col">12 m</th><th scope="col">9 m</th><th scope="col">6 m</th><th scope="col">3 m</th><th scope="col">Paliers</th><th scope="col">DTR</th><th scope="col">Plongée</th></tr></thead>
         <tbody id="rows"></tbody>
       </table>

@@ -87,3 +87,16 @@ export function initShare() {
     });
   }
 }
+
+/* ---------- bulles d'aide « i » (petits écrans) : affichent ou masquent l'explication d'un bloc.
+   Sur grand écran, les « i » sont cachés par le CSS et les textes sont toujours visibles. ---------- */
+export function initInfo() {
+  document.querySelectorAll('.info').forEach(function (b) {
+    const box = $(b.getAttribute('aria-controls'));
+    b.addEventListener('click', function () {
+      const open = !box.classList.contains('open');
+      box.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+}

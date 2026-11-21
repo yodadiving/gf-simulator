@@ -1,7 +1,7 @@
 /* Point d'entrée : charge les données, puis gère l'état de la sélection,
    la mise à jour de la page et le branchement des modules. */
 import { PROFILES, initModel } from './model.js';
-import { $, buildChips, syncChips, renderTable, initTheme, initShare } from './ui.js';
+import { $, buildChips, syncChips, renderTable, initTheme, initShare, initInfo } from './ui.js';
 import { initCharts } from './charts.js';
 import { initPwa } from './pwa.js';
 
@@ -52,5 +52,6 @@ async function start() {
 /* Le thème, le partage et l'installation n'ont pas besoin des données : on les démarre même si le chargement échoue. */
 initTheme();
 initShare();
+initInfo();
 initPwa();
 start().catch(showError);
