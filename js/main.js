@@ -1,7 +1,7 @@
 /* Point d'entrée : charge les données, puis gère l'état de la sélection,
    la mise à jour de la page et le branchement des modules. */
 import { PROFILES, initModel } from './model.js';
-import { $, buildChips, syncChips, renderTable, initTheme, initShare, initInfo } from './ui.js';
+import { $, buildChips, syncChips, renderTable, initTheme, initShare, initInfo, applyColors } from './ui.js';
 import { initCharts } from './charts.js';
 import { initPwa } from './pwa.js';
 
@@ -19,6 +19,7 @@ async function start() {
   const res = await fetch('data/profils.json');
   if (!res.ok) throw new Error('data/profils.json : erreur HTTP ' + res.status);
   initModel(await res.json());
+  applyColors();
 
   /* Réglages affichés : 100-100 et 45-95 par défaut, sinon la dernière sélection mémorisée.
      La sélection est mémorisée par NOM (et non par position), pour que l'ajout ou

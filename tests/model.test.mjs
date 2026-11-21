@@ -130,6 +130,18 @@ test('astérisque : seuls 45-95, 40-85 et 35-75 sont des préréglages usine (pa
   assert.equal(byName('30-70').star, false);
 });
 
-test('les 8 symétriques sont avant les 4 asymétriques (couleurs : 8 bleus puis 4 oranges)', () => {
-  assert.deepEqual(m.PROFILES.map((c) => c.g), [...Array(8).fill('symetrique'), ...Array(4).fill('asymetrique')]);
+test('couleurs : les 8 symétriques et les 4 asymétriques sont répartis sur un dégradé de 0 à 1', () => {
+  const sym = m.PROFILES.filter((c) => c.g === 'symetrique');
+  const asym = m.PROFILES.filter((c) => c.g === 'asymetrique');
+  assert.equal(sym.length, 8);
+  assert.equal(asym.length, 4);
+  sym.forEach((c, k) => near(c.t, k / 7, 'symétrique ' + c.n));
+  asym.forEach((c, k) => near(c.t, k / 3, 'asymétrique ' + c.n));
+});
+
+test('colorPositions : indépendant de l’ordre des groupes, et un réglage seul prend le milieu', () => {
+  const g = (...groupes) => groupes.map((x) => ({ g: x }));
+  assert.deepEqual(m.colorPositions(g('symetrique', 'asymetrique', 'symetrique', 'asymetrique', 'symetrique')), [0, 0, 0.5, 1, 1]);
+  assert.deepEqual(m.colorPositions(g('symetrique', 'asymetrique', 'asymetrique')), [0.5, 0, 1]);
+  assert.deepEqual(m.colorPositions([]), []);
 });

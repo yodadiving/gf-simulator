@@ -41,7 +41,7 @@ function checkData(data) {
 }
 
 /* Calcule le profil d'un réglage : points du tracé, total des paliers, DTR, durée totale.
-   setting : { n: nom, g: groupe, s: durées des paliers, star: préréglage usine (facultatif) } */
+   setting : { n: nom, g: groupe, s: durées des paliers, star: préréglage usine (facultatif) } ; t : position dans le groupe (0 à 1), ajoutée par initModel */
 export function computeProfile(setting, i, fix = FIX, stops = STOPS) {
   const c = { ...setting, i, dash: setting.g === 'asymetrique' ? '7 4' : '' };
   let t = fix.depth / fix.desc;
@@ -70,6 +70,19 @@ export function computeProfile(setting, i, fix = FIX, stops = STOPS) {
   return c;
 }
 
+/* Position (de 0 à 1) de chaque réglage dans son groupe, dans l'ordre du fichier de données.
+   Sert à répartir les couleurs sur un dégradé : le premier du groupe a la couleur de départ,
+   le dernier la couleur d'arrivée ; un réglage seul dans son groupe prend le milieu. */
+export function colorPositions(profiles) {
+  const total = {}, seen = {};
+  profiles.forEach(function (c) { total[c.g] = (total[c.g] || 0) + 1; });
+  return profiles.map(function (c) {
+    const k = seen[c.g] || 0;
+    seen[c.g] = k + 1;
+    return total[c.g] > 1 ? k / (total[c.g] - 1) : 0.5;
+  });
+}
+
 /* À appeler une fois, avec le contenu de data/profils.json. */
 export function initModel(data) {
   checkData(data);
@@ -85,6 +98,7 @@ export function initModel(data) {
   PROFILES = data.reglages.map(function (r, i) {
     return computeProfile({ n: r.nom, g: r.groupe, s: r.paliers, star: r.prereglageUsine === true }, i, FIX, STOPS);
   });
+  colorPositions(PROFILES).forEach(function (t, i) { PROFILES[i].t = t; });
   XMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.total; })) / 10) * 10;
   YMAX = 32;
   HMAX = Math.ceil(Math.max.apply(null, PROFILES.map(function (c) { return c.stopSum; })) / 10) * 10;

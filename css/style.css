@@ -3,9 +3,8 @@
 :root{
   --bg:#EEF2F5; --card:#FFFFFF; --ink:#14212B; --muted:#566673; --grid:#DCE3E8; --line:#C3CED6;
   --accent:#0E7C86; --water:#E6F1F6;
-  /* réglages symétriques : 8 bleus, du plus clair (100-100) au plus foncé ; asymétriques : 4 oranges */
-  --c0:#7DB1E6; --c1:#6D9FD4; --c2:#5E8EC2; --c3:#4E7CB0; --c4:#3E6A9F; --c5:#2E588D; --c6:#1F477B; --c7:#0F3569;
-  --c8:#E8A53C; --c9:#DA8128; --c10:#BD5C17; --c11:#8F3E0B;
+  /* couleurs des réglages : dégradé entre deux couleurs par groupe (voir applyColors dans js/ui.js) */
+  --sym-from:#7DB1E6; --sym-to:#0F3569; --asym-from:#E8A53C; --asym-to:#8F3E0B;
   --h0:#0B4F57; --h1:#1B7F8A; --h2:#4FB0B8; --h3:#9DD8DB; --hl0:#FFFFFF; --hl1:#FFFFFF; --hl2:#04262D; --hl3:#04262D;
   color-scheme:light;
   --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -13,13 +12,11 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0D1922; --card:#13232E; --ink:#E7EFF4; --muted:#93A6B3; --grid:#233845; --line:#3A5163;
   --accent:#4FC3CF; --water:#10222D;
-  --c0:#5C86B3; --c1:#6E95BE; --c2:#81A4C9; --c3:#93B3D4; --c4:#A6C1DE; --c5:#B8D0E9; --c6:#CBDFF4; --c7:#DDEEFF;
-  --c8:#A4702C; --c9:#CC8934; --c10:#EBA64D; --c11:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}}
+  --sym-from:#5C86B3; --sym-to:#DDEEFF; --asym-from:#A4702C; --asym-to:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0D1922; --card:#13232E; --ink:#E7EFF4; --muted:#93A6B3; --grid:#233845; --line:#3A5163;
   --accent:#4FC3CF; --water:#10222D;
-  --c0:#5C86B3; --c1:#6E95BE; --c2:#81A4C9; --c3:#93B3D4; --c4:#A6C1DE; --c5:#B8D0E9; --c6:#CBDFF4; --c7:#DDEEFF;
-  --c8:#A4702C; --c9:#CC8934; --c10:#EBA64D; --c11:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}
+  --sym-from:#5C86B3; --sym-to:#DDEEFF; --asym-from:#A4702C; --asym-to:#F8C783; --h0:#19606A; --h1:#2A8C97; --h2:#55BAC3; --h3:#A5E3E8; --hl0:#FFFFFF; --hl1:#03232B; --hl2:#03232B; --hl3:#03232B; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;

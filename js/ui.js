@@ -8,6 +8,20 @@ function swatch(c) {
   return '<svg viewBox="0 0 22 8" aria-hidden="true"><line x1="1" y1="4" x2="21" y2="4" stroke-width="3" stroke-linecap="round" style="stroke:var(--c' + c.i + ')"' + (c.dash ? ' stroke-dasharray="5 3"' : '') + '/></svg>';
 }
 
+/* ---------- couleurs ---------- */
+/* La couleur de chaque réglage est un point d'un dégradé entre deux couleurs du thème
+   (--sym-from / --sym-to pour les symétriques, --asym-from / --asym-to pour les asymétriques,
+   définies dans css/style.css), selon la position du réglage dans son groupe.
+   Les couleurs suivent donc le thème clair ou sombre, et ajouter un réglage dans
+   data/profils.json ne demande aucune retouche du CSS. */
+export function applyColors() {
+  const root = document.documentElement;
+  PROFILES.forEach(function (c) {
+    const g = c.g === 'asymetrique' ? 'asym' : 'sym';
+    root.style.setProperty('--c' + c.i, 'color-mix(in srgb, var(--' + g + '-to) ' + Math.round(c.t * 100) + '%, var(--' + g + '-from))');
+  });
+}
+
 /* ---------- puces ---------- */
 /* onToggle(i) est appelé quand on clique sur la puce du réglage i. */
 export function buildChips(onToggle) {

@@ -39,7 +39,7 @@ js/
   main.js                point d'entrée : charge les données, assemble tout
   model.js               calculs purs (profil, DTR, formats), sans accès à la page
   charts.js              graphiques SVG et info-bulles
-  ui.js                  puces, tableau, thème, fenêtre de partage
+  ui.js                  couleurs des réglages, puces, tableau, thème, partage, aides « i »
   pwa.js                 service worker et bouton « Installer »
   theme-init.js          applique le thème avant l'affichage
 data/profils.json        hypothèses de la plongée et les réglages (gradient factors)
@@ -61,7 +61,7 @@ Tout est dans `data/profils.json` :
 
 Le fichier est vérifié au chargement : une erreur (durée manquante, groupe inconnu…) affiche un message clair dans la console du navigateur et un avertissement dans la page. Après toute modification, lancer `node --test` : il faut mettre à jour les valeurs attendues du test si les durées changent volontairement.
 
-**Ajouter un réglage** : ajouter une entrée à `reglages`, au bon endroit : les réglages `symetrique` d'abord (du plus clair au plus foncé), puis les `asymetrique`. Les couleurs sont attribuées par position : `--c0` à `--c7` (8 bleus) pour les symétriques et `--c8` à `--c11` (4 oranges) pour les asymétriques, dans les trois blocs de variables de `css/style.css` (thème clair, sombre automatique, sombre choisi à la main). Ajouter un réglage demande donc d'ajouter ou de décaler une couleur `--cN` dans ces trois blocs. Un test (`node --test`) vérifie que les symétriques précèdent les asymétriques ; la sélection mémorisée dans le navigateur l'est par nom, donc insérer un réglage ne la perturbe pas.
+**Ajouter un réglage** : ajouter une entrée à `reglages`, c'est tout, sans toucher au CSS. Sa couleur est calculée automatiquement : chaque groupe a un dégradé entre deux couleurs (`--sym-from` et `--sym-to` pour les symétriques, `--asym-from` et `--asym-to` pour les asymétriques, définies une fois par thème dans `css/style.css`), et chaque réglage prend la place correspondant à sa position dans son groupe, dans l'ordre du fichier : le premier d'un groupe a la couleur de départ, le dernier celle d'arrivée. Pour changer les couleurs d'un groupe, modifier ces deux variables dans les trois blocs de thème. Avec beaucoup de réglages dans un même groupe, les nuances voisines deviennent difficiles à distinguer. La sélection mémorisée dans le navigateur l'est par nom : insérer un réglage ne la perturbe pas.
 
 **Limites connues** : les profondeurs de palier (12, 9, 6, 3 m) et la profondeur du fond sont aussi écrites dans `index.html` (en-têtes du tableau, légende de l'histogramme) et dans `js/charts.js` (repères du graphique, axe fixé à 32 m via `YMAX` dans `js/model.js`). Changer le nombre ou la valeur des paliers, ou la profondeur de la plongée, demande donc de modifier aussi ces endroits.
 
