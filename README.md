@@ -74,3 +74,7 @@ Si un fichier est ajouté au projet (script, image, données…), l'ajouter auss
 ## Licence
 
 GNU General Public License v3.0 : voir [LICENSE](LICENSE).
+
+## Contributeurs
+
+[Patyoda06](https://github.com/Patyoda06), [athery](https://github.com/athery)
